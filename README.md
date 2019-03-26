@@ -1,1 +1,1 @@
-# kazshige-server
+# kazshige-proxy
