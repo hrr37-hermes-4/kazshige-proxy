@@ -76,9 +76,9 @@ db.connectAsync()
   .then(() => console.log(`connected to mysql with id ${db.threadId}`))
   .error((err) => { console.log('error connecting to db', err); });
 
-db.queryAsync('CREATE DATABASE IF NOT EXISTS books')
+db.queryAsync('CREATE DATABASE IF NOT EXISTS bookDetail')
   .then(() => {
-    return db.queryAsync('use books');
+    return db.queryAsync('use bookDetail');
   })
   .then(() => {
     return setupDb();
