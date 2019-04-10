@@ -1,18 +1,29 @@
 const express = require('express');
+const path = require('path')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const proxy = require('http-proxy-middleware');
 
-const app = express();
-app.use(bodyParser.json());
+app = express();
 app.use(morgan('dev'));
+app.use(bodyParser.json());
 
-const staticPath = `${__dirname}/../public`;
-app.use('books/:id', express.static(staticPath));
+app.use('/books/:id', express.static(path.join(__dirname, '/../public')));
 
-app.use(
-  '/books/:id/bookInfo',
-  proxy({ target: 'http://localhost:3002', changeOrigin: true})
+// mainInfo
+app.use (
+  '/books/:id/details',
+  proxy({ target: 'http://localhost:3001', changeOrigin: true }),
 );
+
+// detailInfo
+app.use (
+  '/books/:id/reviews',
+  proxy({ target: 'http://localhost:3003', changeOrigin: true }),
+);
+
+// Reviews
+
+// Author
 
 module.exports = app;

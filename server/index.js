@@ -1,7 +1,7 @@
-const http = require('http');
-let app  = require('./app');
-let port = process.env.PORT || 3005
-app.set('port', port);
+const app  = require('./app');
 
-let server = http.createServer(app);
-server.listen(port);
+const port = 3005;
+
+app.listen(3005, () => {
+  console.log(`listening on port ${port}`);
+});
