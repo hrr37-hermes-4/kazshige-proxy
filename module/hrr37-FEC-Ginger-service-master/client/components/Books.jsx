@@ -1,16 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import ToolTip from '../components/ToolTip.jsx';
+import ToolTip from './ToolTip.jsx';
+import style from './css/Books.less';
 
-const BookCover = styled.img`
-  width: 50px;
-  cursor: pointer;
-`;
-
-const BookContainer = styled.div`
-  display: inline-block;
-  position: relative;
-`;
 
 class Books extends React.Component {
   constructor(props) {
@@ -21,50 +12,53 @@ class Books extends React.Component {
     this.toolTipTimeout = null;
     this.state = {
       books: [],
-      bookId: null
-    }
+      bookId: null,
+    };
   }
+
   getBooks() {
-    console.log('running!')
-    fetch('/books/1/authors/1/titles')
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({
-          books: data
-        });
+  console.log('running!');
+  fetch('/books/1/authors/1/titles')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({
+        books: data,
       });
+    });
   }
+
   componentDidMount() {
-    this.getBooks()
+    this.getBooks();
   }
+
   displayToolTip(id) {
-    clearTimeout(this.toolTipTimeout)
+    clearTimeout(this.toolTipTimeout);
     this.setState({
-      bookId: id
-    })
+      bookId: id,
+    });
   }
+
   hideToolTip() {
     this.toolTipTimeout = setTimeout(() => {
       this.setState({
-        bookId: null
-      })
-    }, 500)
+        bookId: null,
+      });
+    }, 500);
   }
+
   render() {
     return (
       <div>
-        {this.state.books.map(item => {
-          return (
-            <BookContainer key={item.id}>
-            <BookCover key={item.id} onMouseEnter={() => {this.displayToolTip(item.id)}} onMouseLeave={this.hideToolTip} src={item.cover} />
-            {this.state.bookId === item.id &&
-            <ToolTip {...item} onUpdate={this.getBooks} author={this.props.author} onMouseEnter={this.displayToolTip} onMouseLeave={this.hideToolTip}/>
+        {this.state.books.map(item => (
+          <div className={style.bookContainer} key={item.id}>
+            <div className={style.bookCover} key={item.id} onMouseEnter={() => { this.displayToolTip(item.id); }} onMouseLeave={this.hideToolTip} src={item.cover} />
+            {this.state.bookId === item.id
+            && <ToolTip {...item} onUpdate={this.getBooks} author={this.props.author} onMouseEnter={this.displayToolTip} onMouseLeave={this.hideToolTip} />
             }
-            </BookContainer>
-          )
-        })}
+          </div>
+        ))}
       </div>
-    )
+    );
   }
 }
 
