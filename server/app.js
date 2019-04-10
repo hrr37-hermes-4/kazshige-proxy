@@ -11,7 +11,10 @@ app.use(bodyParser.json());
 app.use('/books/:id', express.static(path.join(__dirname, '/../public')));
 
 // mainInfo
-
+app.use (
+  '/books/:id/main',
+  proxy({ target: 'http://localhost:3002', changeOrigin: true }),
+);
 
 // detailInfo
 app.use (
@@ -30,6 +33,5 @@ app.use (
   '/books/:id/authors',
   proxy({ target: 'http://localhost:3000', changeOrigin: true }),
 );
-
 
 module.exports = app;
