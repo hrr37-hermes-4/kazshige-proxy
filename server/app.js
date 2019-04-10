@@ -11,19 +11,25 @@ app.use(bodyParser.json());
 app.use('/books/:id', express.static(path.join(__dirname, '/../public')));
 
 // mainInfo
+
+
+// detailInfo
 app.use (
   '/books/:id/details',
   proxy({ target: 'http://localhost:3001', changeOrigin: true }),
 );
 
-// detailInfo
+// Reviews
 app.use (
   '/books/:id/reviews',
   proxy({ target: 'http://localhost:3003', changeOrigin: true }),
 );
 
-// Reviews
-
 // Author
+app.use (
+  '/books/:id/authors',
+  proxy({ target: 'http://localhost:3000', changeOrigin: true }),
+);
+
 
 module.exports = app;
