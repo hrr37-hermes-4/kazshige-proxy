@@ -11,93 +11,78 @@ connection.connect((err) => {
   }
 });
 
-const insertUser = (user) => {
-  return new Promise((resolve, reject) => {
-    const sql = 'INSERT INTO users (username, avatar) VALUES (?, ?)';
-    const params = [user.username, user.avatar];
-    connection.query(sql, params, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const insertUser = user => new Promise((resolve, reject) => {
+  const sql = 'INSERT INTO users (username, avatar) VALUES (?, ?)';
+  const params = [user.username, user.avatar];
+  connection.query(sql, params, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
-const insertReview = (review) => {
-  return new Promise((resolve, reject) => {
-    const sql = 'insert into reviews (user_id, book_id, date, review, rating) values (?, ?, ?, ?, ?)';
-    const params = [review.user_id, review.book_id, review.date, review.review, review.rating];
-    connection.query(sql, params, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const insertReview = review => new Promise((resolve, reject) => {
+  const sql = 'insert into reviews (user_id, book_id, date, review, rating) values (?, ?, ?, ?, ?)';
+  const params = [review.user_id, review.book_id, review.date, review.review, review.rating];
+  connection.query(sql, params, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
-const getReviews = (id) => {
-  return new Promise((resolve, reject) => {
-    const sql = 'select * from reviews where book_id = ?';
-    connection.query(sql, id, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const getReviews = id => new Promise((resolve, reject) => {
+  const sql = 'select * from reviews where book_id = ?';
+  connection.query(sql, id, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
-const getRatedReviews = (id, rating) => {
-  return new Promise((resolve, reject) => {
-    const params = [id, rating];
-    const sql = 'select * from reviews where (book_id = ?) and (rating = ?)';
-    connection.query(sql, params, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const getRatedReviews = (id, rating) => new Promise((resolve, reject) => {
+  const params = [id, rating];
+  const sql = 'select * from reviews where (book_id = ?) and (rating = ?)';
+  connection.query(sql, params, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
-const getUser = (userId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `select username from users where id = ${userId}`;
-    connection.query(sql, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const getUser = userId => new Promise((resolve, reject) => {
+  const sql = `select username from users where id = ${userId}`;
+  connection.query(sql, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
-const getAllUsers = () => {
-  return new Promise((resolve, reject) => {
-    const sql = 'select * from users';
-    connection.query(sql, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const getAllUsers = () => new Promise((resolve, reject) => {
+  const sql = 'select * from users';
+  connection.query(sql, (err, result) => {
+    if (err) { reject(err); }
+    console.log('=======users', result);
+    resolve(result);
   });
-};
+});
 
-const postReview = (review, rating, bookId, userId) => {
-  return new Promise((resolve, reject) => {
-    let date = new Date();
-    date = date.toString();
-    date = date.slice(4, 10) + ', ' + date.slice(11, 15);
+const postReview = (review, rating, bookId, userId) => new Promise((resolve, reject) => {
+  let date = new Date();
+  date = date.toString();
+  date = `${date.slice(4, 10) }, ${date.slice(11, 15)}`;
 
-    const params = [review, rating, bookId, userId, date];
-    const sql = 'insert into reviews (review, rating, book_id, user_id, date) values (?, ?, ?, ?, ?)';
-    connection.query(sql, params, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+  const params = [review, rating, bookId, userId, date];
+  const sql = 'insert into reviews (review, rating, book_id, user_id, date) values (?, ?, ?, ?, ?)';
+  connection.query(sql, params, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
-const addLike = (reviewId) => {
-  return new Promise((resolve, reject) => {
-    const sql = 'update reviews set likes = likes + 1 where (id = ?)';
-    connection.query(sql, reviewId, (err, result) => {
-      if (err) { reject(err); }
-      resolve(result);
-    });
+const addLike = reviewId => new Promise((resolve, reject) => {
+  const sql = 'update reviews set likes = likes + 1 where (id = ?)';
+  connection.query(sql, reviewId, (err, result) => {
+    if (err) { reject(err); }
+    resolve(result);
   });
-};
+});
 
 
 module.exports = {
@@ -109,5 +94,5 @@ module.exports = {
   connection,
   getUser,
   getAllUsers,
-  addLike
+  addLike,
 };

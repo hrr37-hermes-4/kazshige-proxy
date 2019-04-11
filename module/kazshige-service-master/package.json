@@ -6,7 +6,7 @@
   "scripts": {
     "seed": "node database/generator.js",
     "start": "node server/index.js",
-    "build": "webpack --config ./client/webpack.config.js -p",
+    "build": "webpack --config ./client/webpack.config.js -d",
     "start-frontend": "webpack --config ./client/webpack.config.js --dev --watch",
     "start:dev": "nodemon server/index.js"
   },

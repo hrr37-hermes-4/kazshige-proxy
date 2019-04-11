@@ -137,46 +137,46 @@ app.get('/books/:id/users/:userId/readStatus',  async(req, res)=> {
   }
 })
 
-// Adding a shelf
-app.post('/users/:userId/shelf', async (req, res) => {
-  const { shelfName } = req.body;
-  const userId = req.params.userId;
-
-  if(!/^\d+$/.test(userId)) {
-    return res.status(404).json();
-  }
-
-  if(!shelfName || typeof shelfName !== 'string')
-    return res.status(422).json();
-
-  try{
-    await db.insertShelf(shelfName, userId);
-    res.json({ success: true })
-
-  } catch(e){
-    res.status(500).json({ error: e.message })
-  }
-});
-
-// Adding a shelf to bookShelf
-app.post('/books/:id/users/:userId/shelf/:shelfId', async (req, res) => {
-  const { id, shelfId, userId } = req.params;
-
-  if(!/^\d+$/.test(id) || !/^\d+$/.test(shelfId) || !/^\d+$/.test(userId)) {
-    return res.status(404).json();
-  }
-
-  try{
-    await db.insertBookshelf(id, shelfId);
-    res.json({ success: true })
-
-  } catch(e){
-    res.status(500).json({ error: e.message })
-  }
-});
-
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`)
 });
 
 module.exports = app
+
+// ========= not in used ==================
+// app.post('/users/:userId/shelf', async (req, res) => {
+//   const { shelfName } = req.body;
+//   const userId = req.params.userId;
+
+//   if(!/^\d+$/.test(userId)) {
+//     return res.status(404).json();
+//   }
+
+//   if(!shelfName || typeof shelfName !== 'string')
+//     return res.status(422).json();
+
+//   try{
+  //     await db.insertShelf(shelfName, userId);
+//     res.json({ success: true })
+
+//   } catch(e){
+//     res.status(500).json({ error: e.message })
+//   }
+// });
+
+// Adding a shelf to bookShelf
+// app.post('/books/:id/main/users/:userId/shelf/:shelfId', async (req, res) => {
+//   const { id, shelfId, userId } = req.params;
+
+//   if(!/^\d+$/.test(id) || !/^\d+$/.test(shelfId) || !/^\d+$/.test(userId)) {
+//     return res.status(404).json();
+//   }
+
+//   try{
+//     await db.insertBookshelf(id, shelfId);
+//     res.json({ success: true })
+
+//   } catch(e){
+//     res.status(500).json({ error: e.message })
+//   }
+// });

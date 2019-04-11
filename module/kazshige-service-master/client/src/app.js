@@ -108,6 +108,7 @@ export default class App extends React.Component{
 
   render(){
     const { bookInfo, bookImage, rating, ratings, reviews, statusOpened, options, users, readStatus, isOpen } = this.state;
+    console.log(users)
 
     const selectedOption = options.find((option, index) => (readStatus && readStatus.data? readStatus.data.status === index: index === 0));
 
