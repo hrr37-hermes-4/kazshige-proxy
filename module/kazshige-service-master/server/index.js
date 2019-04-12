@@ -129,6 +129,7 @@ app.get('/books/:id/info/users/:userId/readStatus',  async(req, res)=> {
   }
   try {
     const rows = await db.getReadStatus(id, userId)
+
     return res.json({
       data: rows[0] || ""
     })
@@ -175,8 +176,8 @@ app.get('/books/:id/info/users/:userId/readStatus',  async(req, res)=> {
 //   }
 // });
 
-// app.listen(PORT, () => {
-//   console.log(`listening on port ${PORT}`)
-// });
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`)
+});
 
-// module.exports = app
+module.exports = app
