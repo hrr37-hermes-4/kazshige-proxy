@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable class-methods-use-this */
 import React from 'react';
 import axios from 'axios';
-import { DetailBoxRowTitle, DetailBoxRowItem } from './mainInfo.jsx';
-import { GreenButton } from '../header.jsx';
+import sharedStyles from '../css/SharedStyles.less';
 
 class Awards extends React.Component {
   constructor(props) {
@@ -51,11 +52,9 @@ class Awards extends React.Component {
     }
 
     const allAwardsArray = [mainAwardsArr, moreAwardsArr];
-
     if (allAwardsArray[1].length === 0) {
       allAwardsArray[1] = null;
     }
-
     return allAwardsArray;
   }
 
@@ -65,10 +64,10 @@ class Awards extends React.Component {
     const lastIndex = array.length - 1;
 
     array.slice(0, lastIndex).forEach((award, i) => {
-      awardSpanArray.push(<GreenButton key={i}>{`${award}, `}</GreenButton>);
+      awardSpanArray.push(<span className={sharedStyles.greenUnderlineButton} key={i}>{`${award}, `}</span>);
     });
 
-    awardSpanArray.push(<GreenButton key={lastIndex}>{array[lastIndex]}</GreenButton>);
+    awardSpanArray.push(<span className={sharedStyles.greenUnderlineButton} key={lastIndex}>{array[lastIndex]}</span>);
 
     return awardSpanArray;
   }
@@ -80,29 +79,28 @@ class Awards extends React.Component {
 
   render() {
     const { awardsMain, awardsMore, moreToggle } = this.state;
-
     if (awardsMain === null) {
       return (null);
     }
 
     return (
       <div>
-        <DetailBoxRowTitle>Awards</DetailBoxRowTitle>
-        <DetailBoxRowItem>
+        <div className={sharedStyles.detailBoxRowTitle}>Awards</div>
+        <div className={sharedStyles.detailBoxRowItem}>
           {this.generateAwardsLine(awardsMain)}
           {moreToggle && (<br />)}
           {moreToggle && this.generateAwardsLine(awardsMore)}
           {
             awardsMore && (
-              <GreenButton
-                className="moreButton"
+              <span
+                className={`${sharedStyles.greenUnderlineButton} moreButton`}
                 onClick={(e) => { this.handleClick(e); }}
               >
                 {moreToggle ? ' ...less' : ' ...more'}
-              </GreenButton>
+              </span>
             )
           }
-        </DetailBoxRowItem>
+        </div>
       </div>
     );
   }

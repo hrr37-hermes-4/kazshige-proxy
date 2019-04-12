@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable class-methods-use-this */
 import React from 'react';
 import axios from 'axios';
-import { DetailBoxRowTitle, DetailBoxRowItem } from './mainInfo.jsx';
-import { GreenButton, GreyItem } from '../header.jsx';
+import sharedStyles from '../css/SharedStyles.less';
 
 class Settings extends React.Component {
   constructor(props) {
@@ -48,11 +49,11 @@ class Settings extends React.Component {
     array.forEach((setting, i) => {
       const { city, country } = setting;
       settingsSpanArray.push(
-        <GreenButton key={i}>
+        <div className={sharedStyles.greenUnderlineButton} key={i}>
           {`${city} `}
-          <GreyItem>({country})</GreyItem>
+          <span className={sharedStyles.greyoutButton}>({country})</span>
           <br />
-        </GreenButton>,
+        </div>,
       );
     });
 
@@ -73,21 +74,21 @@ class Settings extends React.Component {
 
     return (
       <div>
-        <DetailBoxRowTitle>Settings</DetailBoxRowTitle>
-        <DetailBoxRowItem>
+        <div className={sharedStyles.detailBoxRowTitle}>Settings</div>
+        <div className={sharedStyles.detailBoxRowItem}>
           {this.generateSettingsLine(settingsMain)}
           {moreToggle && this.generateSettingsLine(settingsMore)}
           {
             settingsMore && (
-              <GreenButton
-                className="moreButton"
+              <div
+                className={`${sharedStyles.greenUnderlineButton} moreButton`}
                 onClick={(e) => { this.handleClick(e); }}
               >
                 {moreToggle ? ' ...less' : ' ...more'}
-              </GreenButton>
+              </div>
             )
           }
-        </DetailBoxRowItem>
+        </div>
       </div>
     );
   }

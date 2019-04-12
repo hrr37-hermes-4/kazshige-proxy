@@ -5,7 +5,7 @@ const Promise = require('bluebird');
 const connection = mysql.createConnection({
   user: 'root',
   host: 'localhost',
-  database: 'books',
+  database: 'details',
 });
 
 const db = Promise.promisifyAll(connection, { multiArgs: true });

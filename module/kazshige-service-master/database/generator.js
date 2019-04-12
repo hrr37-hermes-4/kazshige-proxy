@@ -1,3 +1,5 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable class-methods-use-this */
 const AWS = require('aws-sdk');
 const config = require('./config')
 const s3Config = require('./s3')
@@ -12,14 +14,21 @@ const s3 = new AWS.S3({
 });
 
 const createDB = () => {
-  return db.queryAsync(`
-    CREATE TABLE IF NOT EXISTS bookInfo (
-      id INT NOT NULL AUTO_INCREMENT,
-      title VARCHAR(100) NOT NULL,
-      author VARCHAR(100) NOT NULL,
-      description TEXT NOT NULL,
-      PRIMARY KEY (id)
-      );`)
+  return db.queryAsync('CREATE DATABASE IF NOT EXISTS mainInfo')
+    .then(() => {
+      console.log('maininfo created')
+      return db.queryAsync('use mainInfo');
+    })
+    .then(()=> {
+      return db.queryAsync(`
+        CREATE TABLE IF NOT EXISTS bookInfo (
+          id INT NOT NULL AUTO_INCREMENT,
+          title VARCHAR(100) NOT NULL,
+          author VARCHAR(100) NOT NULL,
+          description TEXT NOT NULL,
+          PRIMARY KEY (id)
+      );`);
+    })
     .then(() => {
       return db.queryAsync(`
         CREATE TABLE IF NOT EXISTS image (
@@ -202,7 +211,7 @@ class DummyDataGenerator {
 
   async seedData() {
     try{
-      await  createDB()
+      await createDB();
       await this.seedUsers();
       await this.seedBookInfo();
       await this.seedShelf();

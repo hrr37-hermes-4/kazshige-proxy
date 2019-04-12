@@ -2,7 +2,7 @@
 const db = require('./index');
 // use npm run drop:tables to drop all tables
 
-db.queryAsync('use books')
+db.queryAsync('use details')
   .then(() => db.queryAsync('drop tables details'))
   .then(() => db.queryAsync('drop table characters'))
   .then(() => db.queryAsync('drop table awards'))
