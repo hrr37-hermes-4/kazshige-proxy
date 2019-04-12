@@ -1,38 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import StarRatings from 'react-star-ratings';
-import ReviewActivity from './ReviewActivity.jsx'
-
-const ReviewContent = styled.div`
-  font-family: Merriweather, Georgia, serif;
-  line-height: 21px;
-  font-size: 14px;
-`;
-
-const User = styled.a`
-  color: #00635d;
-  font-weight: bold;
-  text-decoration: none;
-  &:hover {text-decoration: underline};
-  cursor: pointer
-`;
-
-const UserDetails = styled.div`
-  font-family: Lato, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
-  overflow: hidden;
-  display: block;
-`;
-
-const Image = styled.a`
-  margin-right: 10px;
-  float: left;
-`;
-
-const Float = styled.span`
-  float: right;
-  color: #999999;
-`;
+import ReviewActivity from './ReviewActivity.jsx';
+import style from './css/style.less';
 
 const EachReview = (props) => {
   const {
@@ -44,7 +13,7 @@ const EachReview = (props) => {
     reviews,
     reviewId,
     likes,
-    id
+    id,
   } = props;
 
   return (
@@ -53,13 +22,13 @@ const EachReview = (props) => {
         if (user.id === userId) {
           return (
             <div key={index}>
-              <Image>
+              <a href="#" className={style.image}>
                 <img src={user.avatar} alt="" />
-              </Image>
-              <UserDetails>
-                <User>
+              </a>
+              <div className={style.userDetails}>
+                <a href="#" className={style.user}>
                   {user.username}
-                </User>
+                </a>
                 <span> rated it </span>
                 <StarRatings
                   rating={rating}
@@ -70,17 +39,17 @@ const EachReview = (props) => {
                   starSpacing="0px"
                   z-index={-1}
                 />
-                <Float>{date}</Float>
-                <ReviewContent>
+                <span className={style.float}>{date}</span>
+                <div className={style.reviewContent}>
                   <p>{review}</p>
-                </ReviewContent>
+                </div>
                 <ReviewActivity
                   id={id}
                   reviews={reviews}
                   reviewId={reviewId}
                   likes={likes}
                 />
-              </UserDetails>
+              </div>
             </div>
           );
         }

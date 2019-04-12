@@ -2,7 +2,7 @@ module.exports = {
   entry: `${__dirname}/client/src/index.jsx`,
 
   output: {
-    filename: 'bundle.js',
+    filename: 'bundle-authors.js',
     path: `${__dirname}/public`,
   },
 

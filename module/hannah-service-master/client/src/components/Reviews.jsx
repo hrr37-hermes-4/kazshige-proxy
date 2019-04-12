@@ -49,7 +49,7 @@ const Reviews = (props) => {
       })
       }
     </div>
-);
+  );
 };
 
 export default Reviews;

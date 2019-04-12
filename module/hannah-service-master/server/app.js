@@ -14,21 +14,11 @@ app.use('/books/:id', express.static(path.join(__dirname, '/../public')));
 
 // get all reviews for specific book id
 app.get('/books/:id/reviews', async (req, res) => {
+  console.log('======herere');
   const { id } = req.params;
   try {
     const reviews = await db.getReviews(id);
     res.json(reviews);
-  } catch (err) {
-    res.json(err);
-  }
-});
-
-// get reviews for specific book w/ specific rating
-app.get('/books/:id/reviews/:rating', async (req, res) => {
-  const { id, rating } = req.params;
-  try {
-    const ratedReviews = await db.getRatedReviews(id, rating);
-    res.json(ratedReviews);
   } catch (err) {
     res.json(err);
   }
@@ -46,6 +36,7 @@ app.get('/books/:id/reviews/users', async (req, res) => {
 
 // post review for specific book and send back updated reviews
 app.post('/books/:id/reviews', async (req, res) => {
+  console.log('====i came here');
   const { id } = req.params;
   const { rating, review, user_id } = req.body;
   try {
@@ -64,6 +55,18 @@ app.put('/books/:id/reviews', async (req, res) => {
     res.json();
   } catch (err) {
     console.log(err);
+  }
+});
+
+// get reviews for specific book w/ specific rating
+app.get('/books/:id/reviews/:rating', async (req, res) => {
+  console.log('======>');
+  const { id, rating } = req.params;
+  try {
+    const ratedReviews = await db.getRatedReviews(id, rating);
+    res.json(ratedReviews);
+  } catch (err) {
+    res.json(err);
   }
 });
 

@@ -1,40 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import StarRatings from 'react-star-ratings';
-
-
-const RatingDetailsBar = styled.div`
-  font-family: Lato, Helvetica Neue, Helvetica, sans-serif;
-`;
-
-const LinkTag = styled.a`
-  color: #00635D;
-  cursor: pointer;
-  text-decoration: none;
-  &:hover {text-decoration: underline};
-`;
-
-const Header = styled.p`
-  color: #382110;
-  fontWeight: 450
-`;
-
-const ReviewCount = styled.span`
-  color: #999999;
-`;
+import style from './css/style.less';
 
 const RatingDetails = (props) => {
   const { average, reviews} = props;
   return (
-    <div>
-      <RatingDetailsBar>
-        <Header>COMMUNITY REVIEWS</Header>
+      <div className={style.ratingDetailsBar}>
+        <p className={style.ratingHeader}>COMMUNITY REVIEWS</p>
         <hr />
-        <StarRatings rating={4} starRatedColor="#FF7F50" numberOfStars={5} name="rating" starDimension="20px" starSpacing="0px" />
+        <StarRatings rating={4} starRatedColor="#FF7F50" numberOfStars={5} name="rating" starDimension="14px" starSpacing="0px" />
         <span> {average} </span>
-        <LinkTag href="#">Rating details</LinkTag>
-        <ReviewCount> • {reviews.length} ratings</ReviewCount>
-      </RatingDetailsBar>
+        <a href="#" className={style.linkTag} href="#">Rating details</a>
+        <span className={style.reviewCount}> • {reviews.length} ratings</span>
     </div>
   );
 };

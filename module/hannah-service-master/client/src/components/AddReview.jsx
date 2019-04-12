@@ -1,44 +1,7 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
-import styled from 'styled-components';
 import $ from 'jquery';
-
-const Search = styled.div`
-  float: left;
-  background: #FFFFFF;
-  resize: none;
-  margin-top: 40px;
-  margin-left: 70px;
-  font:-family: Merriweather, Georgia, serif;
-`;
-
-const Text = styled.textarea`
-  border: 1px solid #D6D0C4;
-  border-radius: 5px;
-  &:focus {outline: none; box-shadow:0 0 10px #D6D0C4;}
-`;
-
-const Submit = styled.button`
-  background-color: #F4F1EA;
-  border-radius: 3px;
-  color: #333333;
-  height: 35px;
-  width: 100px;
-  float: right;
-  margin-top: 13px;
-  margin-bottom: 30px;
-  margin-right: 5px;
-  border: 1px solid #D6D0C4;
-  box-shadow: 0 0 10px #F4F1EA;
-  cursor: pointer;
-  &:focus {outline: none; box-shadow:0 0 10px #D6D0C4;}
-`;
-
-const Star = styled.span`
-  float: right;
-  margin-top: 15px;
-  margin-right: 18px
-`;
+import style from './css/style.less';
 
 class AddReview extends React.Component {
   constructor(props) {
@@ -56,7 +19,7 @@ class AddReview extends React.Component {
 
   ratingHandler(rating) {
     this.setState({
-      selectedRating: rating
+      selectedRating: rating,
     });
   }
 
@@ -75,7 +38,7 @@ class AddReview extends React.Component {
     await $.post(`/books/${id}/reviews`, {
       review: myReview,
       rating: selectedRating,
-      user_id: userId
+      user_id: userId,
     });
 
     await onUpdate(myReview);
@@ -85,7 +48,7 @@ class AddReview extends React.Component {
     e.preventDefault();
     this.setState({
       review: '',
-      rating: 0
+      rating: 0,
     });
   }
 
@@ -93,21 +56,28 @@ class AddReview extends React.Component {
     const { selectedRating } = this.state;
     return (
       <div>
-        <Search>
-          <Text
+        <div className={style.reviewSearch}>
+          <textarea
+            className={style.text}
             name="review"
             rows="12"
             cols="85"
             onChange={this.reviewHandler}
             placeholder="Type your review here"
           />
-          <Submit onClick={this.postReview}>Post review</Submit>
-          <Star>
+          <button
+            type="submit"
+            className={style.submit}
+            onClick={this.postReview}
+          >
+            Post review
+          </button>
+          <span className={style.star}>
             <StarRatings
               name="rating"
               onChange={this.ratingHandler}
               changeRating={this.ratingHandler}
-              isSelectable={true}
+              isSelectable
               rating={selectedRating}
               starRatedColor="#FF7F50"
               numberOfStars={5}
@@ -115,8 +85,8 @@ class AddReview extends React.Component {
               starSpacing="0px"
               starHoverColor="#FF7F50"
             />
-          </Star>
-        </Search>
+          </span>
+        </div>
       </div>
     );
   }

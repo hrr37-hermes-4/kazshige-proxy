@@ -1,15 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import Tooltip from './Tooltip.jsx';
-
-const StyledLink = styled.a`
-  color: #00635d;
-  textDecoration: none;
-  font-family: Lato, Helvetica Neue, Helvetica, sans-serif;
-  cursor: pointer;
-  &:hover {text-decoration: underline};
-  display: inline-block
-`;
+import style from './css/style.less';
 
 class Filter extends React.Component {
   constructor(props) {
@@ -38,7 +29,7 @@ class Filter extends React.Component {
     const { displayTooltip } = this.state;
     return (
       <div>
-        <StyledLink onMouseEnter={this.showTooltip} onMouseLeave={this.hideTooltip}>Filter</StyledLink>
+        <a className={style.filterLink} onMouseEnter={this.showTooltip} onMouseLeave={this.hideTooltip}>Filter</a>
         <Tooltip
           onSelectRating={onSelectRating}
           interactive

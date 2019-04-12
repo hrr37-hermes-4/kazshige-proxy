@@ -35,7 +35,7 @@ app.get('/books/:id/info', async (req, res) => {
   }
 });
 
-app.get('/books/:id/users', async (req, res) => {
+app.get('/books/:id/info/users', async (req, res) => {
   let id = req.params.id;
   try {
     if(!/^\d+$/.test(id)) {
@@ -50,7 +50,7 @@ app.get('/books/:id/users', async (req, res) => {
 
 });
 
-app.get('/books/:id/image', async (req, res) => {
+app.get('/books/:id/info/image', async (req, res) => {
   let id = parseInt(req.params.id);
   if(!/^\d+$/.test(id)) {
     return res.status(404).json();
@@ -64,7 +64,7 @@ app.get('/books/:id/image', async (req, res) => {
   }
 });
 
-app.get('/books/:id/ratings', async (req, res) => {
+app.get('/books/:id/info/ratings', async (req, res) => {
   const id = req.params.id;
 
   if(!/^\d+$/.test(id)) {
@@ -79,7 +79,7 @@ app.get('/books/:id/ratings', async (req, res) => {
   }
 });
 
-app.get('/books/:id/reviews', async (req, res) => {
+app.get('/books/:id/info/reviews', async (req, res) => {
   const id = req.params.id;
 
   if(!/^\d+$/.test(id)) {
@@ -95,7 +95,7 @@ app.get('/books/:id/reviews', async (req, res) => {
   }
 });
 
-app.put('/books/:id/users/:userId/readStatus', async (req, res) => {
+app.put('/books/:id/info/users/:userId/readStatus', async (req, res) => {
   const id = parseInt(req.params.id, 10);
   const userId = parseInt(req.params.userId, 10);
   const { status } = req.body;
@@ -120,7 +120,7 @@ app.put('/books/:id/users/:userId/readStatus', async (req, res) => {
   }
 });
 
-app.get('/books/:id/users/:userId/readStatus',  async(req, res)=> {
+app.get('/books/:id/info/users/:userId/readStatus',  async(req, res)=> {
   const id = req.params.id;
   const userId = req.params.userId;
 
@@ -137,46 +137,46 @@ app.get('/books/:id/users/:userId/readStatus',  async(req, res)=> {
   }
 })
 
-// Adding a shelf
-app.post('/users/:userId/shelf', async (req, res) => {
-  const { shelfName } = req.body;
-  const userId = req.params.userId;
+// // Adding a shelf
+// app.post('/users/:userId/shelf', async (req, res) => {
+//   const { shelfName } = req.body;
+//   const userId = req.params.userId;
 
-  if(!/^\d+$/.test(userId)) {
-    return res.status(404).json();
-  }
+//   if(!/^\d+$/.test(userId)) {
+//     return res.status(404).json();
+//   }
 
-  if(!shelfName || typeof shelfName !== 'string')
-    return res.status(422).json();
+//   if(!shelfName || typeof shelfName !== 'string')
+//     return res.status(422).json();
 
-  try{
-    await db.insertShelf(shelfName, userId);
-    res.json({ success: true })
+//   try{
+//     await db.insertShelf(shelfName, userId);
+//     res.json({ success: true })
 
-  } catch(e){
-    res.status(500).json({ error: e.message })
-  }
-});
+//   } catch(e){
+//     res.status(500).json({ error: e.message })
+//   }
+// });
 
-// Adding a shelf to bookShelf
-app.post('/books/:id/users/:userId/shelf/:shelfId', async (req, res) => {
-  const { id, shelfId, userId } = req.params;
+// // Adding a shelf to bookShelf
+// app.post('/books/:id/inusers/:userId/shelf/:shelfId', async (req, res) => {
+//   const { id, shelfId, userId } = req.params;
 
-  if(!/^\d+$/.test(id) || !/^\d+$/.test(shelfId) || !/^\d+$/.test(userId)) {
-    return res.status(404).json();
-  }
+//   if(!/^\d+$/.test(id) || !/^\d+$/.test(shelfId) || !/^\d+$/.test(userId)) {
+//     return res.status(404).json();
+//   }
 
-  try{
-    await db.insertBookshelf(id, shelfId);
-    res.json({ success: true })
+//   try{
+//     await db.insertBookshelf(id, shelfId);
+//     res.json({ success: true })
 
-  } catch(e){
-    res.status(500).json({ error: e.message })
-  }
-});
+//   } catch(e){
+//     res.status(500).json({ error: e.message })
+//   }
+// });
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`)
-});
+// app.listen(PORT, () => {
+//   console.log(`listening on port ${PORT}`)
+// });
 
-module.exports = app
+// module.exports = app
