@@ -26,7 +26,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   output: {
-    path: path.resolve(__dirname,'public'),
+    path: path.resolve(__dirname, 'client', 'public'),
     publicPath: '/',
     filename: 'bundle-main.js'
   },
@@ -34,7 +34,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
-    contentBase: path.join(__dirname,'public'),
+    contentBase: path.join(__dirname, 'client', 'public'),
     historyApiFallback: true,
     hot: true
   }

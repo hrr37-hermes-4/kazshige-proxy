@@ -10,14 +10,14 @@ const faker = require('faker');
 const s3 = new AWS.S3({
   region: 'ap-northeast-1',
   accessKeyId: s3Config.accessKeyID,
-  secretAccessKey: s3Config.secretAccessKey,
+  secretAccessKey: s3Config.secretAccessKey
 });
 
 const createDB = () => {
-  return db.queryAsync('CREATE DATABASE IF NOT EXISTS mainInfo')
+  return db.queryAsync('CREATE DATABASE IF NOT EXISTS books')
     .then(() => {
-      console.log('maininfo created')
-      return db.queryAsync('use mainInfo');
+      console.log('books created')
+      return db.queryAsync('use books');
     })
     .then(()=> {
       return db.queryAsync(`
@@ -126,8 +126,9 @@ class DummyDataGenerator {
         if (isTruncated) {
           marker = response.Contents.slice(-1)[0].Key;
         }
+
     } catch(error) {
-    throw error;
+      throw error;
     }
   }
   return items
@@ -212,8 +213,11 @@ class DummyDataGenerator {
   async seedData() {
     try{
       await createDB();
+      console.log('db created');
       await this.seedUsers();
+      console.log('users')
       await this.seedBookInfo();
+      console.log('info')
       await this.seedShelf();
     }catch(e){
       console.log("=====error", e.message)
@@ -225,5 +229,6 @@ class DummyDataGenerator {
 new DummyDataGenerator()
 .seedData()
 .then(() => {
+  console.log('done');
   db.close()
 });

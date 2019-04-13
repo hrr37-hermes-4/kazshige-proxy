@@ -138,6 +138,14 @@ app.get('/books/:id/info/users/:userId/readStatus', async (req, res) => {
   }
 })
 
+
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`)
+});
+
+module.exports = app
+
+// ================ not in used =========================
 // // Adding a shelf
 // app.post('/users/:userId/shelf', async (req, res) => {
 //   const { shelfName } = req.body;
@@ -175,9 +183,3 @@ app.get('/books/:id/info/users/:userId/readStatus', async (req, res) => {
 //     res.status(500).json({ error: e.message })
 //   }
 // });
-
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`)
-});
-
-module.exports = app
